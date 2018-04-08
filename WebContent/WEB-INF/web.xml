@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	id="WebApp_ID" version="3.0">
+	<display-name>MoaPhone_md2_method</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>board</servlet-name>
+		<servlet-class>controller.BoardAction</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>board</servlet-name>
+		<url-pattern>/board/*</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>member</servlet-name>
+		<servlet-class>controller.MemberAction</servlet-class>
+	
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>member</servlet-name>
+		<url-pattern>/member/*</url-pattern>
+	</servlet-mapping>
+
+	<!-- <jsp-config>
+		<jsp-property-group>
+			<url-pattern>/view/*</url-pattern>
+			<include-prelude>/common/header.jsp</include-prelude>
+		</jsp-property-group>
+	</jsp-config>
+ -->
+
+
+</web-app>

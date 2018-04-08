@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ldg.mybatisBoard">
+	<cache />
+
+	<select id="getArticleCount" parameterType="hashmap" resultType="int">
+		select count(*) from mp_board where phone_kind = #{phone_kind}
+
+	</select>
+
+	<select id="getArticles" parameterType="hashmap" resultType="Board">
+
+				select * from ( select rownum rnum, a.* from (select num,phone_kind,writer,title,password
+				,content,reg_date,readcount,ref,re_step,re_level
+				 from mp_board where phone_kind = #{phone_kind} order by ref desc, re_step) 
+				 a ) where rnum between #{start} and #{end}
+
+	</select>
+
+
+	<update id="update_readcount" parameterType="hashmap">
+
+		update mp_board set
+		readcount = readcount+1 where num = #{num} and phone_kind = #{phone_kind}
+
+	</update>
+
+	<select id="getArticle" parameterType="hashmap" resultType="Board">
+
+		select * from mp_board where num = #{num} and phone_kind = #{phone_kind}
+
+	</select>
+
+	<select id="insertArticle_new" parameterType="hashmap"
+		resultType="int">
+
+		select nvl(max(num),0) from mp_board where phone_kind = #{phone_kind}
+
+	</select>
+
+	<insert id="insertArticle_insert" parameterType="hashmap">
+
+			insert into mp_board (num,writer,title,password
+			,reg_date,ref,re_step,re_level,content,phone_kind) 
+			 values (#{num},#{writer},#{title},
+			 #{password},sysdate,#{ref},#{re_step},
+			 #{re_level},#{content},#{phone_kind})
+
+	</insert>
+
+	<update id="insertArticle_update" parameterType="hashmap">
+
+		update mp_board set
+		re_step=re_step+1
+		where ref= #{ref} and re_step > #{re_step}
+		and phone_kind
+		= #{phone_kind}
+
+	</update>
+	
+	<select id="updateArticle_chpw" resultType="String" parameterType="hashMap">
+		
+		select password from mp_board where num = #{num} and phone_kind = #{phone_kind}
+	</select>
+	
+	<update id="update_update" parameterType="hashmap">
+
+		update mp_board set 
+		writer = #{writer}, title = #{title}, password = #{password},
+		content = #{content} where num = #{num} and phone_kind = #{phone_kind}
+
+	</update>
+	
+	<select id="delete_chpw" resultType="String" parameterType="hashMap">
+		select password from mp_board where num = #{num} and phone_kind = #{phone_kind}
+	</select>
+	
+	<delete id="delete_delete" parameterType="hashMap">
+	
+		delete from mp_board where num = #{num} and phone_kind = #{phone_kind}
+	</delete>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ldg.mybatisMember">
+	<cache />
+
+	<select id="confirmId" parameterType="hashmap" resultType="String">
+		select id from MP_MEMBER where id = #{id}
+	</select>
+	
+	<select id="confirmNickname" parameterType="hashmap" resultType="String">
+		select nickname from MP_MEMBER where nickname = #{nickname}
+	</select>
+	
+	<insert id ="insertMember" parameterType="hashmap">
+	insert into MP_MEMBER values 
+	(#{id},#{nickname},#{passwd},sysdate,#{email})
+	
+	</insert>
+	
+	<select id="login" resultType="Member" parameterType="hashmap">
+		select * from MP_MEMBER where id = #{id} and passwd = #{passwd}
+	
+	</select>
+	
+	<select id="findId" resultType="String" parameterType="hashmap">
+		
+		select id from MP_MEMBER where email = #{email} and nickname = #{nickname}
+	</select>
+	
+	<select id="findPassword" resultType="String" parameterType="hashmap">
+		
+		select passwd from MP_MEMBER where id = #{id} and nickname = #{nickname}
+	</select>
+	
+	<update id="updateMember" parameterType="hashmap">
+		
+		update MP_MEMBER set 
+		nickname = #{nickname} , passwd = #{passwd} , 
+		email = #{email} where id = #{id}
+	</update>
+	
+</mapper>
